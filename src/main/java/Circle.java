@@ -19,9 +19,10 @@ public class Circle {
             try {
                 Scanner sc = new Scanner(System.in);
                 inputSquareCircle = sc.nextDouble();
+                if (inputSquareCircle < 0) throw new IllegalArgumentException();
                 rightInput = false;
 
-            } catch (InputMismatchException e) {
+            } catch (IllegalArgumentException | InputMismatchException e) {
                 System.out.println("Неверный ввод. Для задания площади введите положительное вещественное число.");
             }
         }
@@ -33,9 +34,10 @@ public class Circle {
             try {
                 Scanner sc = new Scanner(System.in);
                 radius = sc.nextDouble();
+                if (radius < 0) throw new IllegalArgumentException();
                 rightInput = false;
 
-            } catch (InputMismatchException e) {
+            } catch (IllegalArgumentException | InputMismatchException e) {
                 System.out.println("Неверный ввод. Для задания радиуса введите положительное вещественное число.");
             }
         }
