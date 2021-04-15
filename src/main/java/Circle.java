@@ -1,83 +1,76 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Circle {
     public static void main(String[] args) {
+        String promptInputCircleArea = "Введите площадь круга (чтобы найти его радиус) в квадратных метрах:";
+        String promptErrorInputCircleArea = "Неверный ввод. Для задания площади введите положительное вещественное число.";
+        double inputCircleArea = consoleInputHandle(promptInputCircleArea, promptErrorInputCircleArea);
 
-        double radius = 0;
-        double sector = 0;
-        double circleLength;
-        double sectorSquare;
-        double circleSquare;
-        double inputSquareCircle = 0;
-        double radiusCalc;
-        boolean rightInput = true;
+        double calculatedRadius = Math.sqrt(inputCircleArea / Math.PI);
+        System.out.printf("Радиус круга для введённой площади %s м2 равен %f м%n", inputCircleArea, calculatedRadius);
 
-        //region Handling square input
-        while (rightInput) {
-            System.out.println("Введите площадь круга (чтобы найти его радиус) в квадратных метрах:");
-            try {
-                Scanner sc = new Scanner(System.in);
-                inputSquareCircle = sc.nextDouble();
-                if (inputSquareCircle < 0) throw new IllegalArgumentException();
-                rightInput = false;
+        String promptInputRadius = "Введите радиус окружности в метрах:";
+        String promptErrorInputRadius = "Неверный ввод. Для задания радиуса введите положительное вещественное число.";
+        double radius = consoleInputHandle(promptInputRadius, promptErrorInputRadius);
 
-            } catch (IllegalArgumentException | InputMismatchException e) {
-                System.out.println("Неверный ввод. Для задания площади введите положительное вещественное число.");
+        String promptInputSectorAngle = "Введите угол сектора окружности в градусах (от 0 до 360) :";
+        String promptErrorInputSectorAngle = "Неверный ввод. Для задания угла сектора введите положительное вещественное число" + "\n" + "в диапазоне от 0 до 360.";
+        double sectorAngle = consoleInputHandle(promptInputSectorAngle, promptErrorInputSectorAngle, 0., 360.);
+
+        double circleLength = 2 * Math.PI * radius;
+        System.out.printf("Длина всей окружности - %f м%n", circleLength);
+
+        double circleArea = Math.PI * Math.pow(radius, 2);
+        System.out.printf("Площадь всей окружности - %f м2%n", circleArea);
+
+        double sectorArea = Math.PI * Math.pow(radius, 2) * sectorAngle / 360;
+        System.out.printf("Площадь сектора  - %f м2", sectorArea);
+    }
+
+    public static double consoleInputHandle(String inputPrompt, String errorPrompt) {
+        boolean isRightInput = false;
+
+        Scanner scanner = new Scanner(System.in);
+
+        double input = 0;
+        while (!isRightInput) {
+            System.out.println(inputPrompt);
+            if (scanner.hasNextDouble()) {
+                input = scanner.nextDouble();
+                if (input <= 0.) {
+                    System.out.println(errorPrompt);
+                    continue;
+                }
+                isRightInput = true;
+            } else {
+                System.out.println(errorPrompt);
+                scanner.nextLine();
             }
         }
-        //endregion
-        rightInput = true;
-        //region Handling radius input
-        while (rightInput) {
-            System.out.println("Введите радиус окружности в метрах:");
-            try {
-                Scanner sc = new Scanner(System.in);
-                radius = sc.nextDouble();
-                if (radius < 0) throw new IllegalArgumentException();
-                rightInput = false;
+        return input;
+    }
 
-            } catch (IllegalArgumentException | InputMismatchException e) {
-                System.out.println("Неверный ввод. Для задания радиуса введите положительное вещественное число.");
+    public static double consoleInputHandle(String inputPrompt, String errorPrompt, double minValue, double maxValue) {
+        boolean isRightInput = false;
+
+        Scanner scanner = new Scanner(System.in);
+
+        double input = 0;
+        while (!isRightInput) {
+            System.out.println(inputPrompt);
+            if (scanner.hasNextDouble()) {
+                input = scanner.nextDouble();
+                if (input < minValue || input > maxValue) {
+                    System.out.println(errorPrompt);
+                    continue;
+                }
+                isRightInput = true;
+            } else {
+                System.out.println(errorPrompt);
+                scanner.nextLine();
             }
         }
-        //endregion
-        rightInput = true;
-        //region Handling sector input
-        while (rightInput) {
-            System.out.println("Введите сектор окружности в градусах (от 0 до 360) :");
-            try {
-                Scanner sc = new Scanner(System.in);
-                sector = sc.nextDouble();
-
-            } catch (InputMismatchException e) {
-                System.out.println("Неверный ввод. Для задания сектора введите положительное вещественное число");
-                System.out.println("в диапазоне от 0 до 360");
-                continue;
-
-            }
-            if (sector < 0 || sector > 360) {
-                System.out.println("Неверный ввод. Значение сектора должно быть в пределах от 0 до 360");
-                continue;
-            }
-            rightInput = false;
-        }
-        //endregion
-
-        circleLength = 2 * Math.PI * radius;
-        circleSquare = Math.PI * Math.pow(radius, 2);
-        sectorSquare = Math.PI * Math.pow(radius, 2) * sector / 360;
-        radiusCalc = Math.sqrt(inputSquareCircle/Math.PI);
-
-        System.out.printf("Длина всей окружности - %s м", circleLength);
-        System.out.printf("%n");
-        System.out.printf("Площадь всей окружности - %s м2", circleSquare);
-        System.out.printf("%n");
-        System.out.printf("Площадь сектора  - %s м2", sectorSquare);
-        System.out.printf("%n");
-        System.out.printf("Радиус круга для введённой площади %s м2 равен %s м", inputSquareCircle, radiusCalc);
-
-
+        return input;
     }
 }
 
