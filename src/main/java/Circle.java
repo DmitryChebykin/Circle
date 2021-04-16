@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Circle {
     public static void main(String[] args) {
+
         String promptInputCircleArea = "Введите площадь круга (чтобы найти его радиус) в квадратных метрах:";
         String promptErrorInputCircleArea = "Неверный ввод. Для задания площади введите положительное вещественное число.";
         double inputCircleArea = consoleInputHandle(promptInputCircleArea, promptErrorInputCircleArea);
@@ -14,7 +15,7 @@ public class Circle {
         double radius = consoleInputHandle(promptInputRadius, promptErrorInputRadius);
 
         String promptInputSectorAngle = "Введите угол сектора окружности в градусах (от 0 до 360) :";
-        String promptErrorInputSectorAngle = "Неверный ввод. Для задания угла сектора введите положительное вещественное число" + "\n" + "в диапазоне от 0 до 360.";
+        String promptErrorInputSectorAngle = "Неверный ввод. Для задания угла сектора введите положительное вещественное число " + "\n" + "в диапазоне от 0 до 360.";
         double sectorAngle = consoleInputHandle(promptInputSectorAngle, promptErrorInputSectorAngle, 0., 360.);
 
         double circleLength = 2 * Math.PI * radius;
@@ -24,7 +25,7 @@ public class Circle {
         System.out.printf("Площадь всей окружности - %f м2%n", circleArea);
 
         double sectorArea = Math.PI * Math.pow(radius, 2) * sectorAngle / 360;
-        System.out.printf("Площадь сектора  - %f м2", sectorArea);
+        System.out.printf("Площадь сектора - %f м2", sectorArea);
     }
 
     public static double consoleInputHandle(String inputPrompt, String errorPrompt) {
@@ -73,4 +74,3 @@ public class Circle {
         return input;
     }
 }
-
